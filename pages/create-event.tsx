@@ -1,12 +1,12 @@
 import { ethers } from "ethers";
-import React, { useState } from "react";
-import { IconCheck, IconClock, IconX } from "@tabler/icons";
-import { DatePicker, TimeInput } from "@mantine/dates";
-import { Button, Container, Divider, Group, Input, Notification, SimpleGrid, Space, Text, Textarea, Title } from "@mantine/core";
-import getRandomImage from "../utils/getRandomImage";
-import { padTo2Digits } from "../utils";
-import connectContract from "../utils/connectContract";
 import { useAccount } from "wagmi";
+import React, { useState } from "react";
+import { DatePicker, TimeInput } from "@mantine/dates";
+import { IconCheck, IconClock, IconX } from "@tabler/icons";
+import { Button, Container, Divider, Group, Input, Notification, SimpleGrid, Space, Text, Textarea, Title } from "@mantine/core";
+import { padTo2Digits } from "../utils";
+import getRandomImage from "../utils/getRandomImage";
+import connectContract from "../utils/connectContract";
 
 const CreateEvent = () => {
   // ====>>STATE<<====
@@ -83,8 +83,8 @@ const CreateEvent = () => {
   
         const txn = await rsvpContract.createNewEvent(
           eventTimestamp,
-          maxCapacity,
           deposit,
+          maxCapacity,
           eventDataCID,
           { gasLimit: 900000 }
         );
