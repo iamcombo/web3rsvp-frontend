@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { IconCheck, IconClock, IconX } from "@tabler/icons";
 import { Button, Container, Divider, Group, Input, Notification, SimpleGrid, Space, Text, Textarea, Title } from "@mantine/core";
-import { padTo2Digits } from "../utils";
+import { dateWithHyphens, timeWithColon } from "../utils";
 import getRandomImage from "../utils/getRandomImage";
 import connectContract from "../utils/connectContract";
 
@@ -50,9 +50,6 @@ const CreateEvent = () => {
       } else {
         console.log("Form successfully submitted!");
         let responseJSON = await response.json();
-        console.log('====================================');
-        console.log('cid', responseJSON.cid);
-        console.log('====================================');
         await createEvent(responseJSON.cid);
       }
       // check response, if success is false, dont take them to success page
@@ -65,19 +62,13 @@ const CreateEvent = () => {
 
   const createEvent = async(cid: string) => {
     try {
-      const year = eventDate.getFullYear();
-      const month = padTo2Digits(eventDate.getMonth() + 1);
-      const day = padTo2Digits(eventDate.getDate());
-      const dateWithHyphens = [year, month, day].join('-');
-    
-      const hours = eventTime?.getHours();
-      const minutes = eventTime?.getMinutes();
-      const timeWithHyphens = [hours, minutes].join(':');
+      const _dateWithHyphens = dateWithHyphens(eventDate);
+      const _timeWithColon = timeWithColon(eventTime);
 
       const rsvpContract = connectContract();
       if (rsvpContract) {
         let deposit = ethers.utils.parseEther(refund);
-        let eventDateAndTime = new Date(`${dateWithHyphens} ${timeWithHyphens}`);
+        let eventDateAndTime = new Date(`${_dateWithHyphens} ${_timeWithColon}`);
         let eventTimestamp = eventDateAndTime.getTime();
         let eventDataCID = cid;
   
@@ -91,7 +82,7 @@ const CreateEvent = () => {
 
         setLoading(true);
         console.log("Minting...", txn.hash);
-        let wait = txn.wait();
+        let wait = await txn.wait();
         console.log("Minted -- ", txn.hash);
 
         setEventID(wait.events[0].args[0]);
@@ -103,6 +94,9 @@ const CreateEvent = () => {
         console.log("Error getting contract.");
       }
     } catch (error: any) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
       setSuccess(false);
       setMessage(`There was an error creating your event: ${error.message}`);
       setLoading(false);

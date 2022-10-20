@@ -41,15 +41,18 @@ async function makeFileObjects(body: any) {
   const files = await getFilesFromPath(imageDirectory);
 
   files.push(new File([buffer], "data.json"));
+  console.log('====================================');
+  console.log(files);
+  console.log('====================================');
   return files;
-}
-
-function makeStorageClient() {
-  return new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN as string });
 }
 
 async function storeFiles(files: any) {
   const client = makeStorageClient();
   const cid = await client.put(files);
   return cid;
+}
+
+function makeStorageClient() {
+  return new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN as string });
 }
