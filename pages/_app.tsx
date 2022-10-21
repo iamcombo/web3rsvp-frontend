@@ -6,6 +6,8 @@ import { ConnectKitProvider, getDefaultClient } from 'connectkit'
 import { publicProvider } from 'wagmi/providers/public'
 import { MantineProvider } from '@mantine/core'
 import Layout from '../components/Layout'
+import { ApolloProvider } from "@apollo/client";
+import client from '../utils/apollo-client'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const ALCHEMY_ID = process.env.NEXT_PUBLIC_ALCHEMY_ID as string;
@@ -52,19 +54,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <ConnectKitProvider>
-        <MantineProvider 
-          theme={{
-            fontFamily: 'Space Grotesk, sans-serif',
-            fontFamilyMonospace: 'Space Grotesk, Courier, monospace',
-            headings: { fontFamily: 'Space Grotesk, sans-serif' },
-          }}
-          withGlobalStyles 
-          withNormalizeCSS
-        >
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </MantineProvider>
+        <ApolloProvider client={client}>
+          <MantineProvider 
+            theme={{
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontFamilyMonospace: 'Space Grotesk, Courier, monospace',
+              headings: { fontFamily: 'Space Grotesk, sans-serif' },
+            }}
+            withGlobalStyles 
+            withNormalizeCSS
+          >
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </MantineProvider>
+        </ApolloProvider>
       </ConnectKitProvider>
     </WagmiConfig>
   )

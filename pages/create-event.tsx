@@ -62,7 +62,7 @@ const CreateEvent = () => {
 
   const createEvent = async(cid: string) => {
     try {
-      const _dateWithHyphens = dateWithHyphens(eventDate);
+      const _dateWithHyphens: string = dateWithHyphens(eventDate);
       const _timeWithColon = timeWithColon(eventTime);
 
       const rsvpContract = connectContract();
@@ -86,7 +86,7 @@ const CreateEvent = () => {
         console.log("Minted -- ", txn.hash);
 
         setEventID(wait.events[0].args[0]);
-
+        
         setSuccess(true);
         setLoading(false);
         setMessage("Your event has been created successfully.");
