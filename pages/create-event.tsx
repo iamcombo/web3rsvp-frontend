@@ -5,8 +5,8 @@ import { DatePicker, TimeInput } from "@mantine/dates";
 import { IconCheck, IconClock, IconX } from "@tabler/icons";
 import { Button, Container, Divider, Group, Input, Notification, SimpleGrid, Space, Text, Textarea, Title } from "@mantine/core";
 import { dateWithHyphens, timeWithColon } from "../utils";
-import getRandomImage from "../utils/getRandomImage";
 import connectContract from "../utils/connectContract";
+import getRandomImage from "../utils/getRandomImage";
 
 const CreateEvent = () => {
   // ====>>STATE<<====
@@ -28,7 +28,7 @@ const CreateEvent = () => {
   const { address } = useAccount();
   // ====>>END HOOK<<====
 
-// ====>>FUNCTION<<====
+  // ====>>FUNCTION<<====
   const handleSubmit = async(e: any) => {
     e.preventDefault();
 
@@ -102,7 +102,7 @@ const CreateEvent = () => {
       setLoading(false);
     }
   }
-// ====>>END FUNCTION<<====
+  // ====>>END FUNCTION<<====
 
   return (
     <div>

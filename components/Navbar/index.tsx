@@ -9,7 +9,9 @@ const Navbar = () => {
     <Header height={60} mb={80}>
       <Container size={1280} className={styles.Header}>
         <Group>
-          <Text size={'xl'} weight={500}>web3rsvp</Text>
+          <Link href={'/'}>
+            <Text size={'xl'} weight={500} sx={{cursor: 'pointer'}}>web3rsvp</Text>
+          </Link>
         </Group>
         <Group spacing={5}>
           <Link href={'/create-event'}>
